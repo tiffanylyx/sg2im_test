@@ -335,15 +335,15 @@ def main(args):
       'vocab': vocab,
       'model_kwargs': model_kwargs,
       'losses_ts': [],
-      'losses': defaultdict(list),
-      'd_losses': defaultdict(list),
+      'losses': [],
+      'd_losses': [],
       'checkpoint_ts': [],
       'train_batch_data': [], 
       'train_samples': [],
       'train_iou': [],
       'val_batch_data': [], 
       'val_samples': [],
-      'val_losses': defaultdict(list),
+      'val_losses': [],
       'val_iou': [], 
       'norm_d': [], 
       'norm_g': [],
@@ -398,7 +398,7 @@ def main(args):
       total_loss_d = None
       ac_loss_real = None
       ac_loss_fake = None
-      d_losses = {}
+      d_losses = []
 
       if t % args.print_every == 0:
         print('t = %d / %d' % (t, args.num_iterations))
