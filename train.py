@@ -38,7 +38,7 @@ from sg2im.metrics import jaccard
 from sg2im.model import Sg2ImModel
 from sg2im.utils import int_tuple, float_tuple, str_tuple
 from sg2im.utils import timeit, bool_flag, LossManager
-
+import sys
 torch.backends.cudnn.benchmark = True
 
 VG_DIR = os.path.expanduser('datasets/vg')
@@ -451,6 +451,7 @@ def main(args):
 
 
 if __name__ == '__main__':
+  sys.stdout.flush()
   args = parser.parse_args()
   main(args)
 
