@@ -391,6 +391,7 @@ def main(args):
         continue
 
       optimizer.zero_grad()
+      loss.requires_grad=True
       with timeit('backward', args.timing):
         loss.backward()
       optimizer.step()
