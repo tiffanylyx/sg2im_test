@@ -259,7 +259,7 @@ def check_model(args, t, loader, model):
       boxes_pred = model(objs, triples, obj_to_img, boxes_gt=boxes, masks_gt=model_masks)
 
       skip_pixel_loss = False
-      loss =  calculate_model_losses(boxes, boxes_pred)
+      loss = calculate_model_losses(boxes, boxes_pred)
 
       total_iou += jaccard(boxes_pred, boxes)
       total_boxes += boxes_pred.size(0)
@@ -272,7 +272,10 @@ def check_model(args, t, loader, model):
     samples['gt_img'] = imgs
 
     model_out = model(objs, triples, obj_to_img, boxes_gt=boxes, masks_gt=masks)
-    samples['gt_box_gt_mask'] = model_out
+    samples['gt_box'] = model_out
+
+    model_out = model(objs, triples, obj_to_img)
+    samples['pred_box'] = model_out[0]
 
     for k, v in samples.items():
       samples[k] = imagenet_deprocess_batch(v)
