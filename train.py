@@ -256,7 +256,7 @@ def check_model(args, t, loader, model):
 
       # Run the model as it has been run during training
       model_masks = masks
-      boxes_pred = model(objs, triples, obj_to_img, boxes_gt=boxes, masks_gt=model_masks)
+      boxes_pred = model(objs, triples, obj_to_img)#, boxes_gt=boxes, masks_gt=model_masks)
 
       skip_pixel_loss = False
       loss = calculate_model_losses(boxes, boxes_pred)
@@ -429,8 +429,7 @@ def main(args):
         print('train iou: ', t_avg_iou)
         print('val iou: ', val_avg_iou)
 
-        for k, v in val_losses.items():
-          checkpoint['val_losses'][k].append(v)
+        checkpoint['val_losses'].append(val_losses)
         checkpoint['model_state'] = model.state_dict()
 
         checkpoint['optim_state'] = optimizer.state_dict()
