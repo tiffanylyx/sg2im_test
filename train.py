@@ -421,6 +421,7 @@ def main(args):
         print('checking on val')
         val_results = check_model(args, t, val_loader, model)
         val_losses, val_batch_data, val_avg_iou = val_results
+        print('val_losses',val_losses)
         #checkpoint['val_samples'].append(val_samples)
         checkpoint['val_batch_data'].append(val_batch_data)
         checkpoint['val_iou'].append(val_avg_iou)
