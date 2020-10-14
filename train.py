@@ -267,7 +267,7 @@ def check_model(args, t, loader, model):
       num_samples += imgs.size(0)
       if num_samples >= args.num_val_samples:
         break
-
+    '''
     samples = {}
     samples['gt_img'] = imgs
 
@@ -279,7 +279,7 @@ def check_model(args, t, loader, model):
 
     for k, v in samples.items():
       samples[k] = imagenet_deprocess_batch(v)
-
+    '''
     mean_losses = loss
     avg_iou = total_iou / total_boxes
 
@@ -291,7 +291,7 @@ def check_model(args, t, loader, model):
     'triple_to_img': triple_to_img.detach().cpu().clone(),
     'boxes_pred': boxes_pred.detach().cpu().clone(),
   }
-  out = [mean_losses, samples, batch_data, avg_iou]
+  out = [mean_losses, batch_data, avg_iou]
 
   return tuple(out)
 
@@ -411,17 +411,17 @@ def main(args):
       if t % args.checkpoint_every == 0:
         print('checking on train')
         train_results = check_model(args, t, train_loader, model)
-        t_losses, t_samples, t_batch_data, t_avg_iou = train_results
+        t_losses, t_batch_data, t_avg_iou = train_results
 
         checkpoint['train_batch_data'].append(t_batch_data)
-        checkpoint['train_samples'].append(t_samples)
+        #checkpoint['train_samples'].append(t_samples)
         checkpoint['checkpoint_ts'].append(t)
         checkpoint['train_iou'].append(t_avg_iou)
 
         print('checking on val')
         val_results = check_model(args, t, val_loader, model)
-        val_losses, val_samples, val_batch_data, val_avg_iou = val_results
-        checkpoint['val_samples'].append(val_samples)
+        val_losses, val_batch_data, val_avg_iou = val_results
+        #checkpoint['val_samples'].append(val_samples)
         checkpoint['val_batch_data'].append(val_batch_data)
         checkpoint['val_iou'].append(val_avg_iou)
 
