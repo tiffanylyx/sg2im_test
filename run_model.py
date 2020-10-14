@@ -65,21 +65,8 @@ def main(args):
 
   # Run the model forward
   with torch.no_grad():
-    imgs, boxes_pred, masks_pred, _ = model.forward_json(scene_graphs)
-  imgs = imagenet_deprocess_batch(imgs)
+    boxes_pred = model.forward_json(scene_graphs)
 
-  # Save the generated images
-  for i in range(imgs.shape[0]):
-    img_np = imgs[i].numpy().transpose(1, 2, 0)
-    img_path = os.path.join(args.output_dir, 'img%06d.png' % i)
-    imwrite(img_path, img_np)
-
-  # Draw the scene graphs
-  if args.draw_scene_graphs == 1:
-    for i, sg in enumerate(scene_graphs):
-      sg_img = vis.draw_scene_graph(sg['objects'], sg['relationships'])
-      sg_img_path = os.path.join(args.output_dir, 'sg%06d.png' % i)
-      imwrite(sg_img_path, sg_img)
   if args.draw_layout_graphs == 1:
     count = 0
     for i, sg in enumerate(scene_graphs):
